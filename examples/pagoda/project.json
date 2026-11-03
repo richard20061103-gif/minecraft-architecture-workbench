@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "name": "Five-tier pagoda study",
+  "edition": "java",
+  "version": "1.21.8",
+  "mode": "preview",
+  "world": null,
+  "dimension": "minecraft:overworld",
+  "bounds": null,
+  "protectedPositions": [],
+  "source": { "survey": null, "reference": ["Newly authored case notes; no world data or tutorial frames"] },
+  "design": { "brief": "Complete a compact fifth tier while preserving the lower roof rhythm; design an inhabitable timber room and short turning stair.", "style": "East Asian timber pagoda", "floors": [], "lightingZones": [], "risks": ["floating eaves", "stair headroom", "unsupported finial"] },
+  "artifacts": { "model": null, "interior": null, "cutaway": null }
+}

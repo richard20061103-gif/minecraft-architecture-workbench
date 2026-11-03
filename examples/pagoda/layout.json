@@ -1,0 +1,13 @@
+{
+  "kind": "illustrative-local-coordinate-study",
+  "origin": [0, 0, 0],
+  "unit": "blocks",
+  "tiers": [
+    {"level": 1, "floorY": 0, "eaveHalfSpan": 20},
+    {"level": 2, "floorY": 9, "eaveHalfSpan": 18},
+    {"level": 3, "floorY": 18, "eaveHalfSpan": 16},
+    {"level": 4, "floorY": 27, "eaveHalfSpan": 14},
+    {"level": 5, "floorY": 36, "eaveHalfSpan": 12, "roomHeight": 5}
+  ],
+  "checks": ["eave corners connect to brackets and posts", "turning stair reaches a landing", "finial has a continuous support path"]
+}

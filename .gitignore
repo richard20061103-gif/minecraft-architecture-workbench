@@ -10,4 +10,3 @@ work/
 *.zip
 *.mcfunction
 !examples/**/*.mcfunction
-

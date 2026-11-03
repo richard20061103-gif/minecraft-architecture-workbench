@@ -1,0 +1,5 @@
+Minecraft Architecture Workbench
+
+Parts of the NBT builder, browser viewer and Lodestone reference documentation are derived from minecraft-builder-skill by Matthew Zhou (https://github.com/mattzh72/minecraft-builder-skill), licensed under Apache License 2.0. Their Apache license text is retained in skills/minecraft-architecture/LICENSE. Modifications include the architecture workflow, camera parameters and local multi-model preview support.
+
+The @mattzh72/lodestone dependency is licensed under MIT. See https://github.com/mattzh72/lodestone/blob/main/LICENSE. Minecraft is a trademark of Mojang; this independent project is not affiliated with Mojang.

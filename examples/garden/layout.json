@@ -1,0 +1,13 @@
+{
+  "kind": "illustrative-local-coordinate-study",
+  "origin": [0, 0, 0],
+  "unit": "blocks",
+  "site": {"x": [0, 113], "z": [0, 83]},
+  "zones": [
+    {"id": "entry", "x": [44, 68], "z": [0, 17]},
+    {"id": "quiet-court", "x": [6, 42], "z": [19, 68]},
+    {"id": "pond", "x": [41, 87], "z": [24, 70]},
+    {"id": "gallery", "x": [66, 108], "z": [9, 28]}
+  ],
+  "checks": ["bank transition uses multiple materials and levels", "path has a destination", "concealed lamps actually illuminate the walkable surface"]
+}

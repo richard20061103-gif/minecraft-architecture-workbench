@@ -1,0 +1,14 @@
+{
+  "kind": "illustrative-local-coordinate-study",
+  "origin": [0, 0, 0],
+  "unit": "blocks",
+  "footprint": {"x": [0, 81], "z": [0, 56]},
+  "floors": [
+    {"level": 1, "floorY": 0, "use": "public foyer and service"},
+    {"level": 2, "floorY": 7, "use": "exhibition and council access"},
+    {"level": 3, "floorY": 14, "use": "gallery and records"},
+    {"level": 4, "floorY": 21, "use": "meeting and archive"},
+    {"level": 5, "floorY": 28, "use": "viewing and education"}
+  ],
+  "checks": ["each level has a destination and partitions", "atrium overlooks have rails", "light is measured per occupied zone", "entry plaza does not consume building depth"]
+}

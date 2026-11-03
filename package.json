@@ -1,0 +1,13 @@
+{
+  "name": "minecraft-architecture-workbench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20.19" },
+  "bin": { "mc-architecture": "./bin/mc-architecture.mjs" },
+  "scripts": {
+    "check": "node --test tests/*.test.mjs",
+    "start": "node bin/mc-architecture.mjs serve --project examples/pagoda"
+  },
+  "license": "Apache-2.0"
+}

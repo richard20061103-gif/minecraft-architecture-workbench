@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 590" role="img" aria-label="Illustrative garden plan with asymmetric court, pond, gallery and paths">
+<rect width="800" height="590" fill="#f2f0e9"/><text x="42" y="53" font-family="sans-serif" font-size="25" fill="#29302c">GARDEN / PLAN STUDY</text><text x="42" y="79" font-family="sans-serif" font-size="14" fill="#6b746d">Anonymous local coordinates · not copied from a world</text>
+<rect x="65" y="112" width="665" height="410" rx="10" fill="#83947b" stroke="#3b5144" stroke-width="9"/><path d="M71 415Q180 404 238 421Q305 432 335 371Q381 314 448 315Q523 310 549 388Q575 450 664 430V518H70Z" fill="#e7dfc9"/>
+<path d="M338 184Q402 148 454 171Q511 157 560 200Q637 197 663 262Q696 333 643 378Q582 418 511 386Q463 418 406 372Q351 366 333 316Q294 253 338 184Z" fill="#6d9297" stroke="#a9b8a2" stroke-width="18"/>
+<path d="M97 196Q194 159 243 201Q280 240 250 290Q196 314 124 285Q89 250 97 196Z" fill="#eee9db"/><g fill="#71836a"><ellipse cx="375" cy="225" rx="30" ry="16"/><ellipse cx="523" cy="330" rx="46" ry="25"/><ellipse cx="203" cy="252" rx="28" ry="16"/></g>
+<rect x="433" y="117" width="255" height="62" fill="#b8a98f" stroke="#4d4c47" stroke-width="6"/><path d="M65 445Q270 455 327 407Q369 386 413 393" fill="none" stroke="#c8c3b3" stroke-width="24"/><path d="M462 512Q431 477 452 419Q469 391 492 383" fill="none" stroke="#c8c3b3" stroke-width="20"/>
+<g font-family="sans-serif" font-size="15" fill="#26332c"><text x="113" y="224">quiet court</text><text x="472" y="252">pond</text><text x="492" y="154">gallery</text><text x="315" y="505">entry path</text></g>
+</svg>

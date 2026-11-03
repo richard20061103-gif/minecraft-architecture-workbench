@@ -1,0 +1,38 @@
+{
+  "name": "minecraft-architecture-skill",
+  "version": "1.0.0",
+  "description": "Single Minecraft architecture skill with NBT preview and safe construction workflow.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "files": [
+    "SKILL.md",
+    "scripts/",
+    "assets/",
+    "references/",
+    "LICENSE",
+    "package.json",
+    "npm-shrinkwrap.json"
+  ],
+  "keywords": [
+    "agent-skill",
+    "skills-cli",
+    "minecraft",
+    "nbt",
+    "lodestone",
+    "schematic"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build:example": "node scripts/run-build.mjs assets/examples/celestial-forge.mjs --out-dir minecraft-builds/celestial-forge",
+    "preview:example": "node scripts/preview.mjs --nbt minecraft-builds/celestial-forge/celestial-forge.nbt",
+    "pack:dry-run": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "@mattzh72/lodestone": "0.6.0",
+    "gl-matrix": "3.4.4",
+    "three": "0.164.1",
+    "vite": "8.0.16"
+  }
+}
