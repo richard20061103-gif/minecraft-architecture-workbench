@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.nbt
+*.mca
+node_modules/
+survey-cache*.json
+outputs/
+work/
+*.log
+*.zip
+*.mcfunction
+!examples/**/*.mcfunction
+
