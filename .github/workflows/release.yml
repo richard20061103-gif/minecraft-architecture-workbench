@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '24'
       - name: Check tag matches package version
-        run: node -e "const p=require('./package.json');if(process.env.GITHUB_REF_NAME!=='v'+p.version)process.exit(1)"
+        run: node -e "const p=require('./package.json'),tag=process.env.GITHUB_REF_NAME,base='v'+p.version,prefix=base+'-rc.';if(tag!==base&&!(tag.startsWith(prefix)&&/^\d+$/.test(tag.slice(prefix.length))))process.exit(1)"
       - run: node scripts/package-release.mjs
       - name: Publish verified assets
         env:
@@ -30,4 +30,6 @@ jobs:
             echo "A release already exists; refusing to replace its assets."
             exit 1
           fi
-          gh release create "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS.txt --verify-tag --title "Minecraft Architecture Workbench $GITHUB_REF_NAME" --notes-file release/RELEASE-NOTES.md
+          options=()
+          if [[ "$GITHUB_REF_NAME" == *-rc.* ]]; then options+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS.txt --verify-tag --title "Minecraft Architecture Workbench $GITHUB_REF_NAME" --notes-file release/RELEASE-NOTES.md "${options[@]}"

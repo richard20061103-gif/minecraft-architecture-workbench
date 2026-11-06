@@ -24,7 +24,7 @@ The automated suite currently contains 16 tests. CI and local test output are th
 2. With a selected isolated game instance, restart the game, open a disposable world and run `bridge check`. Verify the actual world and capabilities through the agent. Keep new-installer live validation marked pending until this is done.
 3. Inspect staged public files for personal paths, credentials, saves, raw site data and journals. `.workbench/` must stay untracked.
 4. Commit reviewed files, run `node scripts/package-release.mjs`, and inspect the resulting ZIPs and SHA256SUMS.txt. Both archives must retain licenses and notices; the full package must include install.cmd and both installation guides.
-5. Push reviewed source and inspect the CI results. Creating a matching `v<package version>` tag triggers tests and release packaging. The release workflow refuses to overwrite an existing release.
+5. Push reviewed source and inspect the CI results. Creating a matching `v<package version>` tag (or `v<package version>-rc.N` candidate tag) triggers tests and release packaging. Candidate tags are published as GitHub prereleases. Use `node scripts/package-release.mjs --tag v1.0.0-rc.1` when packaging that candidate locally. The release workflow refuses to overwrite an existing release.
 
 An existing manual release at the same tag needs explicit reconciliation; do not silently replace its files. Release artifacts are built from the tagged commit, not from a developer's installation cache or uncommitted working tree.
 
