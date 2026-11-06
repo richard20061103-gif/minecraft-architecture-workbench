@@ -1,0 +1,14 @@
+Minecraft Architecture Workbench
+
+Parts of the NBT builder, browser viewer and Lodestone references derive from
+minecraft-builder-skill by Matthew Zhou, licensed under Apache-2.0:
+https://github.com/mattzh72/minecraft-builder-skill
+
+Modifications include the architectural workflow, camera controls, bounded
+multi-model preview, server lifecycle and installation readiness guidance.
+The @mattzh72/lodestone dependency is MIT licensed:
+https://github.com/mattzh72/lodestone/blob/main/LICENSE
+
+Minecraft is a trademark of Mojang. This independent project is not affiliated
+with Mojang. MCPFabric is a separate MIT-licensed upstream project downloaded
+only when the user chooses game-bridge setup; it is not bundled in this skill.

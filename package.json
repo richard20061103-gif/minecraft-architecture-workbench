@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20.19" },
+  "engines": { "node": ">=22.16" },
   "bin": { "mc-architecture": "./bin/mc-architecture.mjs" },
   "scripts": {
     "check": "node --test tests/*.test.mjs",
-    "start": "node bin/mc-architecture.mjs serve --project examples/pagoda"
+    "start": "node bin/mc-architecture.mjs serve --project .workbench/demo",
+    "setup": "node bin/mc-architecture.mjs setup --interactive",
+    "doctor": "node bin/mc-architecture.mjs doctor",
+    "demo": "node bin/mc-architecture.mjs demo"
   },
   "license": "Apache-2.0"
 }

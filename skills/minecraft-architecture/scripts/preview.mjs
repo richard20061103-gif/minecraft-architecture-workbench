@@ -5,6 +5,8 @@ import { createReadStream } from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import os from 'node:os'
+import {randomUUID} from 'node:crypto'
 import { createServer } from 'vite'
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
@@ -119,7 +121,7 @@ function serveFile(response, filePath) {
   stream.pipe(response)
 }
 
-function createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot) {
+function createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot, modelRoot) {
   return {
     name: 'minecraft-builder-preview-middleware',
     configureServer(server) {
@@ -132,7 +134,6 @@ function createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot) {
         try {
           const requestUrl = new URL(request.url ?? '/', 'http://localhost')
           const relativePath = decodeURIComponent(requestUrl.pathname.replace(/^\/+/, ''))
-          const modelRoot = path.dirname(nbtPath)
           const modelPath = path.resolve(modelRoot, relativePath)
           if (!modelPath.startsWith(`${modelRoot}${path.sep}`) || !modelPath.endsWith('.nbt')) {
             response.statusCode = 403
@@ -140,6 +141,8 @@ function createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot) {
             return
           }
           await fs.access(modelPath)
+          const realModel=await fs.realpath(modelPath),realRoot=await fs.realpath(modelRoot)
+          if(!realModel.startsWith(realRoot+path.sep)){response.statusCode=403;response.end('Forbidden');return}
           serveFile(response, modelPath)
         } catch {
           response.statusCode = 404
@@ -169,12 +172,8 @@ function createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot) {
   }
 }
 
-async function main() {
-  const options = parseArgs(process.argv.slice(2))
-  if (options.help) {
-    console.log(usage())
-    return
-  }
+export async function startPreview(input) {
+  const options={host:'127.0.0.1',port:0,lighting:'day',...input}
   if (!options.nbt) {
     throw new Error(`Missing --nbt path.\n${usage()}`)
   }
@@ -183,24 +182,32 @@ async function main() {
   await fs.access(nbtPath)
   const lodestoneRoot = await resolveLodestoneRoot()
   const defaultPackRoot = path.join(lodestoneRoot, 'assets', 'default-pack')
+  const modelRoot=path.resolve(options.modelRoot??path.dirname(nbtPath))
+  const cacheDir=path.join(os.tmpdir(),'mc-architecture-vite-'+randomUUID())
 
   const server = await createServer({
     root: viewerRoot,
     appType: 'spa',
     clearScreen: false,
-    plugins: [createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot)],
+    cacheDir,
+    plugins: [createPreviewMiddlewarePlugin(nbtPath, defaultPackRoot, modelRoot)],
     server: {
       host: options.host,
       port: options.port,
       strictPort: false,
       open: false,
       fs: {
-        strict: false,
+        strict: true,
+        allow: [viewerRoot,lodestoneRoot,modelRoot,skillRoot],
       },
     },
   })
 
   await server.listen()
+  try{
+    await server.environments.client.warmupRequest('/src/main.js')
+    await server.environments.client.waitForRequestsIdle()
+  }catch(error){await server.close();await fs.rm(cacheDir,{recursive:true,force:true});throw error}
   const local = server.resolvedUrls?.local?.[0] ?? `http://${options.host}:${options.port}/`
   const url = new URL(local)
   url.searchParams.set('nbt', '/__minecraft_builder__/build.nbt')
@@ -209,23 +216,10 @@ async function main() {
     url.searchParams.set('lighting', options.lighting)
   }
 
-  console.log(`Minecraft build preview: ${url.toString()}`)
-  if (options.open) {
-    await openUrl(url.toString())
-  }
-
-  let closing = false
-  const close = async () => {
-    if (closing) return
-    closing = true
-    await server.close()
-    process.exit(0)
-  }
-  process.on('SIGINT', close)
-  process.on('SIGTERM', close)
+  return {url:url.toString(),origin:new URL(local).origin,close:async()=>{await server.close();await fs.rm(cacheDir,{recursive:true,force:true})}}
 }
-
-main().catch(err => {
+async function main(){const options=parseArgs(process.argv.slice(2));if(options.help){console.log(usage());return}const preview=await startPreview(options);console.log(`Minecraft build preview: ${preview.url}`);if(options.open)await openUrl(preview.url);let closing=false;const close=async()=>{if(closing)return;closing=true;await preview.close()};process.once('SIGINT',close);process.once('SIGTERM',close)}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main().catch(err => {
   console.error(`preview: ${err.message}`)
   process.exitCode = 1
 })

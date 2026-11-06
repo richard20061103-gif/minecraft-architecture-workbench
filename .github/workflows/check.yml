@@ -1,18 +1,27 @@
 name: Check
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
 jobs:
   workflow:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node: ['22.16.0', '24']
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.19.0'
+          node-version: ${{ matrix.node }}
           cache: npm
           cache-dependency-path: skills/minecraft-architecture/npm-shrinkwrap.json
       - run: npm ci --omit=dev
         working-directory: skills/minecraft-architecture
       - run: npm run check
-      - run: node skills/minecraft-architecture/scripts/run-build.mjs skills/minecraft-architecture/assets/examples/celestial-forge.mjs --out-dir /tmp/mc-architecture-smoke --name smoke --json
+      - run: node bin/mc-architecture.mjs demo --project .workbench/ci-demo
       - run: npm pack --dry-run
         working-directory: skills/minecraft-architecture

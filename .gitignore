@@ -6,6 +6,11 @@ node_modules/
 survey-cache*.json
 outputs/
 work/
+.workbench/
+.runtime/
+release/
+*.backup-*
+*.staging-*
 *.log
 *.zip
 *.mcfunction

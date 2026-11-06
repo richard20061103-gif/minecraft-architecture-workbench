@@ -9,6 +9,8 @@ One skill handles the full project. Reuse approved decisions and surveys. Scale 
 
 ## Route once, then execute
 
+Before a first project, check whether the required design/preview tools and game bridge are actually available. The repository's unified `setup`, `doctor`, `demo` and `bridge check` commands are described in [setup and readiness](references/setup-and-tools.md). Installed files, rendered previews and a connected writable world are distinct states. Do not repeatedly reinstall working tools or silently replace existing agent/game configuration.
+
 1. **Scope and evidence.** Identify concept, NBT preview, or live construction; world/version, approved bounds, protected objects and available tools. Reuse records only when world, bounds and freshness match. Survey missing facts once, then rescan only affected contacts. See [site survey](references/site-survey.md).
 2. **Architectural plan.** Establish approach, silhouette, dominant style, material hierarchy, terrain connection, views, floor-by-floor uses, supports, stairs, furniture, paving and lighting. Trace eaves to real supports and stairs to landings and destinations. Inspect both distant silhouette and human-height experience. Use [aesthetic review](references/aesthetic-review.md), [floor design](references/floors.md) and [lighting](references/lighting.md).
 3. **Buildable artifact.** Fix coordinates, levels, material states, circulation clearances, water boundaries and lighting openings. Generate exterior, interior and cutaway previews where useful. Use `scripts/run-build.mjs` and `scripts/preview.mjs`; read the [recipe API](references/recipe-api.md) only when needed. A browser model is not proof of in-game behavior.

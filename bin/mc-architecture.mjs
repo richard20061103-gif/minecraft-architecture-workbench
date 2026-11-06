@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import {spawn} from 'node:child_process';
 import {planDiff,preflight,inverse,stageDatapack,lightingCensus,stratifiedLightEstimate,checkCompatibility} from '../src/core.mjs';
 import {serve} from '../src/server.mjs';
+import {installationCommand} from '../src/setup-cli.mjs';
 const [command,...args]=process.argv.slice(2);
 const opt=(name,fallback)=>{const i=args.indexOf(`--${name}`);return i>=0?args[i+1]:fallback};
 const read=p=>JSON.parse(fs.readFileSync(path.resolve(p),'utf8'));
 const completeMap=(file,bounds)=>{const data=read(file);if(data?.complete!==true||JSON.stringify(data.bounds?.min)!==JSON.stringify(bounds.min)||JSON.stringify(data.bounds?.max)!==JSON.stringify(bounds.max)||!Array.isArray(data.blocks))throw Error(`Incomplete or mismatched snapshot: ${file}`);return data.blocks};
 const write=(p,value)=>{fs.mkdirSync(path.dirname(path.resolve(p)),{recursive:true});fs.writeFileSync(path.resolve(p),JSON.stringify(value,null,2)+'\n')};
 const usage=`mc-architecture <command> [options]
+  setup --interactive | --yes [--home CODEX_HOME] [--skill-dir DIR] [--replace-skill]
+  doctor                         environment and dependency checks
+  demo [--project DIR]           generate and validate first NBT preview
+  bridge setup --instance DIR --yes [--mc-version 1.21.8 --loader fabric] [--replace-mod] [--allow-world-write]
+  bridge check --instance DIR [--mc-version 1.21.8 --loader fabric]
   init --project DIR --name NAME --version 1.21.8
   diff --before complete-before.json --after complete-after.json --bounds bounds.json --out plan.json
   preflight --plan plan.json --live blocks.json [--out report.json]
@@ -17,12 +24,14 @@ const usage=`mc-architecture <command> [options]
   stage --plan plan.json --out DIR --version 1.21.8 [--pack-format 81]
   lighting --readings readings.json --zones zones.json --out report.json
   lighting-sample --strata strata.json --target target.json --out report.json
-  serve --project DIR [--port 5300]
+  serve --project DIR [--port 5300] [--open]
 Complete snapshot: {"complete":true,"bounds":{"min":[0,60,0],"max":[2,70,2]},"blocks":[{"x":0,"y":64,"z":0,"block":"minecraft:stone"}]}
 Omitted snapshot cells mean air. The live preflight file is an array with explicit air at every changed cell.
 Use exact block states. Live writes require a verified bridge and a backup.`;
 try{
-  if(command==='init'){
+  if(['setup','doctor','demo','bridge'].includes(command)){
+    const result=await installationCommand(command,args);console.log(JSON.stringify(result,null,2));if(result.ready===false||result.connected===false||result.configConflict)process.exitCode=2;
+  }else if(command==='init'){
     const dir=path.resolve(opt('project','project'));fs.mkdirSync(dir,{recursive:true});
     const version=opt('version','1.21.8');const project={schema:1,name:opt('name',path.basename(dir)),edition:'java',version,dataVersion:version==='1.21.8'?4440:null,mode:'preview',world:null,dimension:'minecraft:overworld',bounds:null,protectedPositions:[],source:{survey:null,reference:[]},design:{brief:'',style:'',floors:[],lightingZones:[],risks:[]},artifacts:{model:null,interior:null,cutaway:null,diff:null,preflight:null,lighting:null}};
     if(fs.existsSync(path.join(dir,'project.json')))throw Error('Project already exists');write(path.join(dir,'project.json'),project);console.log(dir);
@@ -43,6 +52,7 @@ try{
   }else if(command==='lighting-sample'){
     const r=stratifiedLightEstimate(read(opt('strata')),read(opt('target')));write(opt('out','lighting-sample-report.json'),r);console.log(JSON.stringify(r,null,2));
   }else if(command==='serve'){
-    await serve(path.resolve(opt('project','project')),Number(opt('port',5300)));
+    const service=await serve(path.resolve(opt('project','project')),Number(opt('port',5300)));
+    if(args.includes('--open')){const opener=process.platform==='win32'?'rundll32.exe':process.platform==='darwin'?'open':'xdg-open';const child=spawn(opener,process.platform==='win32'?['url.dll,FileProtocolHandler',service.url]:[service.url],{stdio:'ignore',windowsHide:true});child.on('error',()=>console.error('Open the printed workbench URL in your browser.'));}
   }else{console.log(usage);if(command&&command!=='help')process.exitCode=1;}
 }catch(e){console.error(e.message);process.exitCode=1;}

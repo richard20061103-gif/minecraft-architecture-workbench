@@ -1,4 +1,4 @@
-# Minecraft Design Workflow
+# Minecraft Architecture Workbench
 
 An agent skill for planning Minecraft architecture and landscapes, surveying sites, and preparing builds for preview or construction. It gives your agent a design process to follow alongside your own references and preferences.
 
@@ -7,6 +7,16 @@ The repository now contains one installable skill, a local browser workbench and
 [English](#english) · [简体中文](#简体中文) · [日本語](#日本語) · [Español](#español)
 
 ## English
+
+### Start here: unified installation
+
+Download the **full workbench ZIP** from Releases and extract it into a permanent folder. On Windows, double-click `install.cmd`: the wizard can obtain a verified, user-local official Node LTS runtime, install the skill and pinned dependencies, and generate an example NBT. It can also install compatible MCPFabric into an explicitly selected existing Fabric/NeoForge instance and prepare Codex configuration. Reload the agent afterward. Installation does not modify world saves.
+
+For agents or macOS/Linux with Node.js 22.16+, run `node bin/mc-architecture.mjs setup --yes`, then `node bin/mc-architecture.mjs doctor` and `node bin/mc-architecture.mjs demo`. Run `npm start` to view that generated example. A fresh installation no longer starts with an empty project. Windows/Codex is the primary validation target; other OSes have CI jobs and must retain their verification status until those jobs pass.
+
+Read the [installation guide](docs/INSTALL.md) for custom destinations, protected upgrades, bridge setup/check, restart requirements and troubleshooting. The skill-only ZIP is for users who manage dependencies manually. An AI agent/account and Minecraft remain separate prerequisites; AI usage may cost money.
+
+After the Windows wizard, double-click `workbench.cmd` to open the example; it also works with the portable Node runtime that is not on PATH.
 
 ### What this project does
 
@@ -17,8 +27,8 @@ It also encourages the agent to record the area it has inspected and reuse suita
 ### What you need
 
 - An AI agent that can load skills, such as Codex.
-- A local copy of this project. Download the repository as a ZIP and extract it, or clone it after it is published.
-- Node.js 20.19 or newer for the bundled NBT export and browser preview tools. Install the pinned dependencies in the skill folder with `npm ci --omit=dev` on first use.
+- A local copy of this project. Download the repository as a ZIP and extract it, or clone the repository.
+- Node.js 22.16 or newer for the bundled NBT export and browser preview tools. Install the pinned dependencies in the skill folder with `npm ci --omit=dev` on first use.
 - A compatible game connection or bridge, with read/write capabilities, only if you want the agent to inspect or edit an actual Minecraft world. This project does not include a bridge.
 
 The NBT preview tool and the game connection have different jobs. Generating a model does not place it in Minecraft. Available block states, entities and placement features depend on your Minecraft version and the tools you use.
@@ -77,6 +87,16 @@ This project is licensed under [Apache-2.0](LICENSE). The bundled builder script
 
 ## 简体中文
 
+### 从这里开始：统一安装
+
+从 Releases 下载 **workbench 完整包**并解压到长期保留的目录。在 Windows 双击 `install.cmd`，按向导安装技能、锁定依赖并生成示例。缺少合适 Node 时，会先询问是否从官方来源下载经过校验的用户目录便携运行环境。实际游戏连接可在向导中选择已有的 Fabric/NeoForge 实例，安装兼容 MCPFabric 并配置 Codex。完成后仍需重新加载 agent；安装不会修改存档。
+
+已有 Node.js 22.16+ 的 agent 或 macOS/Linux 用户，在仓库根目录依次运行 `node bin/mc-architecture.mjs setup --yes`、`node bin/mc-architecture.mjs doctor`、`node bin/mc-architecture.mjs demo`。随后 `npm start` 打开示例工作台，按输出地址查看模型。首发重点验证 Windows/Codex；其他系统的 CI 配置不等于已经实机通过。
+
+完整步骤见[中文安装教程](docs/INSTALL.zh-CN.md)。技能单独包保留给熟悉手动配置的用户。AI 助手/账号和 Minecraft 需另备，AI 调用可能产生费用。桥接“已安装”和“已连接到游戏”会分别报告。
+
+Windows 安装后双击 `workbench.cmd` 打开示例。它会使用安装记录中的 Node，即使系统 PATH 没有 Node 也能启动。
+
 ### 这个项目能做什么
 
 这是一个供 AI 助手使用的 Minecraft 建筑设计技能。它把场地勘探、建筑设计、预览和施工前检查串成一套流程，提醒助手同时考虑外观、室内动线、材料、灯光和周围地形。你可以用它设计庭院、博物馆、住宅等不同风格的作品。
@@ -86,8 +106,8 @@ This project is licensed under [Apache-2.0](LICENSE). The bundled builder script
 ### 开始前准备
 
 1. 准备一个支持加载技能的 AI 助手，例如 Codex。
-2. 下载并解压本项目。项目公开后，可以从 GitHub 下载 ZIP 或克隆仓库。
-3. 如需导出 NBT 和打开网页预览，准备 Node.js 20.19 或更新版本；构建脚本已经包含在唯一的技能目录里。
+2. 下载并解压本项目。可以从 GitHub 下载 ZIP 或克隆仓库。
+3. 如需导出 NBT 和打开网页预览，准备 Node.js 22.16 或更新版本；构建脚本已经包含在唯一的技能目录里。
 4. 如果需要助手读取或修改游戏存档，还要另外准备能连接游戏的工具，例如具有相应读写能力的兼容桥接工具。本项目不包含这个连接工具。
 5. 勘探记录可保存为普通项目文件，无需额外的 Python 工具。
 
@@ -140,6 +160,12 @@ Java 1.21.8 已做实机验证；其他已发布的 Java 1.21.x 暂列实验性�
 
 ## 日本語
 
+### 統合インストール
+
+Releases から **workbench 完全版 ZIP** をダウンロードし、保存しておく場所に展開します。Windows では `install.cmd` をダブルクリックします。必要な場合は公式 Node LTS のユーザー用ポータブル環境を確認付きで取得し、チェックサムを検証します。スキルと固定依存関係をインストールし、サンプル NBT を生成します。選択した既存の Fabric/NeoForge インスタンスには対応 MCPFabric と Codex 接続を設定できます。ワールドは変更しません。完了後はエージェントと、必要に応じてゲームを再起動してください。
+
+Node.js 22.16 以降を用意した環境では、ルートで `node bin/mc-architecture.mjs setup --yes`、`node bin/mc-architecture.mjs doctor`、`node bin/mc-architecture.mjs demo` を順に実行し、`npm start` で表示します。主な検証対象は Windows/Codex です。他 OS は CI の実行結果を確認してください。インストール済み、接続済み、ワールド操作可能の状態は別々に報告します。詳しくは [インストールガイド](docs/INSTALL.md) を参照してください。AI エージェント、利用料金、Minecraft 本体は別途必要です。
+
 ### できること
 
 Minecraft の建築や景観を計画する AI エージェント向けのスキルです。敷地調査、外観、室内動線、素材、照明、地形とのつながりを一つの作業として扱います。庭園だけでなく、美術館や住宅など、さまざまな様式に使えます。
@@ -152,7 +178,7 @@ Minecraft の建築や景観を計画する AI エージェント向けのスキ
 2. このプロジェクトをダウンロードして展開し、`skills/minecraft-architecture` フォルダーを探します。
 3. フォルダーごとエージェントのスキル保存先へコピーします。Codex の通常の保存先は `~/.codex/skills/` です。Windows では通常 `C:\Users\ユーザー名\.codex\skills\` です。コピー後に `minecraft-architecture/SKILL.md` が存在することを確認してください。
 4. エージェントを再起動または再読み込みします。
-5. NBT とブラウザープレビューを使う場合は Node.js 20.19 以降を用意し、`minecraft-architecture` フォルダーで `npm ci --omit=dev` を一度実行します。ビルダースクリプトは同じスキルに含まれています。
+5. NBT とブラウザープレビューを使う場合は Node.js 22.16 以降を用意し、`minecraft-architecture` フォルダーで `npm ci --omit=dev` を一度実行します。ビルダースクリプトは同じスキルに含まれています。
 6. 新しい会話で `$minecraft-architecture` と指定します。認識されない場合はフォルダー構造を確認して再起動してください。
 
 ### ローカル作業画面と CLI
@@ -188,6 +214,12 @@ $minecraft-architecture を使い、約 100 × 80 ブロックの敷地に
 
 ## Español
 
+### Instalación unificada
+
+Descarga el **ZIP completo workbench** desde Releases y extráelo en una carpeta permanente. En Windows abre `install.cmd`: el asistente puede descargar, con tu confirmación, un Node LTS portátil oficial, verificar su suma de comprobación, instalar la habilidad y las dependencias fijadas, y generar un NBT de ejemplo. También puede instalar MCPFabric compatible en una instancia Fabric/NeoForge existente que selecciones y preparar la conexión de Codex. No modifica partidas. Recarga el agente y reinicia el juego cuando se indique.
+
+Con Node.js 22.16 o posterior, ejecuta desde la raíz `node bin/mc-architecture.mjs setup --yes`, `node bin/mc-architecture.mjs doctor` y `node bin/mc-architecture.mjs demo`. Después, `npm start` abre el ejemplo. Windows/Codex es el objetivo principal de validación; comprueba los resultados de CI para otros sistemas. Instalado, conectado y con capacidad de escribir son estados distintos. Consulta la [guía](docs/INSTALL.md). El agente y su cuenta, los posibles costes de IA y Minecraft se preparan por separado.
+
 ### Qué hace
 
 Esta habilidad ayuda a un agente de IA a planificar arquitectura y paisajes de Minecraft. Reúne el estudio del terreno con las decisiones sobre volumen, materiales, recorridos, interiores e iluminación. Sirve para jardines, museos, viviendas y otros estilos.
@@ -200,7 +232,7 @@ El agente puede registrar las zonas ya estudiadas y reutilizar los datos que sig
 2. Descarga y descomprime este proyecto. Busca la carpeta `skills/minecraft-architecture`.
 3. Copia la carpeta completa al directorio de habilidades del agente. En Codex suele ser `~/.codex/skills/`; en Windows normalmente es `C:\Users\TU_USUARIO\.codex\skills\`. Comprueba que la ruta final termine en `minecraft-architecture/SKILL.md`.
 4. Reinicia o recarga el agente para que detecte la habilidad.
-5. Para exportar NBT y abrir vistas previas, usa Node.js 20.19 o posterior y ejecuta una vez `npm ci --omit=dev` dentro de `minecraft-architecture`. Los scripts de construcción ya están incluidos en esa única habilidad.
+5. Para exportar NBT y abrir vistas previas, usa Node.js 22.16 o posterior y ejecuta una vez `npm ci --omit=dev` dentro de `minecraft-architecture`. Los scripts de construcción ya están incluidos en esa única habilidad.
 6. Inicia una conversación nueva y solicita `$minecraft-architecture`. Si no aparece, revisa la ruta y reinicia el agente.
 
 ### Panel local y CLI
