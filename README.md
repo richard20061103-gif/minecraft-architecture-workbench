@@ -6,6 +6,8 @@ The repository now contains one installable skill, a local browser workbench and
 
 [English](#english) · [简体中文](#简体中文) · [日本語](#日本語) · [Español](#español)
 
+Download: [Release v1.0.0-rc.1](https://github.com/richard20061103-gif/minecraft-architecture-workbench/releases/tag/v1.0.0-rc.1) · [中文新手教程](docs/BEGINNER.zh-CN.md). This is a prerelease; the new bridge setup still needs a fresh live-game connection test.
+
 ## English
 
 ### Start here: unified installation
@@ -111,7 +113,7 @@ Windows 安装后双击 `workbench.cmd` 打开示例。它会使用安装记录�
 4. 如果需要助手读取或修改游戏存档，还要另外准备能连接游戏的工具，例如具有相应读写能力的兼容桥接工具。本项目不包含这个连接工具。
 5. 勘探记录可保存为普通项目文件，无需额外的 Python 工具。
 
-### 手把手安装
+### 手动安装（高级用户；使用上面的统一向导后无需重复）
 
 1. 打开解压后的项目文件夹，在 `skills/` 中找到唯一的 `minecraft-architecture` 文件夹并复制。地板规划、照明设计与验收、NBT 建造流程都已整合在这个技能里。
 2. 将这一个文件夹放进助手的技能目录。Codex 通常使用 `~/.codex/skills/`；Windows 上一般是 `C:\Users\你的用户名\.codex\skills\`。安装后应能找到 `skills/minecraft-architecture/SKILL.md`。
